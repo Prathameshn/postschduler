@@ -1,0 +1,35 @@
+{
+  "name": "postschduler",
+  "version": "1.0.0",
+  "description": "schedule and post feed according to requiremnt with account type",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "yarn docs",
+    "start": "cross-env NODE_ENV=production pm2 start ./src/index.js",
+    "dev": "nodemon ./src/index.js"
+  },
+  "author": "Prathmesh Naik",
+  "license": "ISC",
+  "engines": {
+    "node": ">=8",
+    "yarn": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prathameshn/postschduler.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "node.js",
+    "mongodb",
+    "mongoose",
+    "passport"
+  ],
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+
+  }
+}
