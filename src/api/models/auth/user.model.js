@@ -178,13 +178,13 @@ userSchema.statics = {
    * @returns {Promise<User[]>}
    */
   async list({
-    page = 1, perPage = 30, name, email, role,
+    page = 1, perPage = 20, name, email,search
   }) {
-    let options = omitBy({ role }, isNil);
-    if(name && name.length){
+    let options = omitBy({ name, email }, isNil);
+    if(search && search.length){
       let queryArr = []
-      queryArr.push({ "email": { $regex: name, $options: 'i' } })
-      queryArr.push({ "name": { $regex: name, $options: 'i' } })
+      queryArr.push({ "email": { $regex: search, $options: 'i' } })
+      queryArr.push({ "name": { $regex: search, $options: 'i' } })
       options = { $and: [options, { $or: queryArr }] }
     }
     let users = await this.find(options)
