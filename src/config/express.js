@@ -54,6 +54,9 @@ app.get("/tests",(req,res,next)=>{
     res.json({message:"Success"})
 })
 
+app.use(express.static('public'))
+
+
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);
 

@@ -92,12 +92,27 @@ exports.list = async (req, res, next) => {
 
 
 /**
+ * Get post getMyPost
+ * @public
+ */
+ exports.getMyPost = async (req, res, next) => {
+   try {
+      let { entity } =req.session
+      req.query.user = entity
+      let posts = await Post.list(req.query);
+      return res.json(posts)
+   } catch (error) {
+      next(new APIError(error));
+   }
+};
+
+
+/**
  * Delete post
  * @public
  */
 exports.remove = async(req, res, next) => {
     const { post } = req.locals;
-
     post.remove()
       .then(() => res.status(httpStatus.NO_CONTENT).end())
       .catch(e => next(e));
@@ -107,7 +122,7 @@ exports.setMedia = async(req, res, next) => {
    try{
       let media;
       let { post } = req.locals
-      if(req.files.length > 0){
+      if(req.files && req.files.length > 0){
          media = req.files
          media = await media.map((ele)=>{
            ele.path = `/Post/${ele.filename}`;

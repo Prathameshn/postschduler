@@ -18,7 +18,6 @@ router
 router
   .route('/:userId')
   .get(authorize(), controller.get)
-  .put(authorize(), controller.replace)
   .patch(authorize(), controller.update)
   .delete(authorize(), controller.remove);
 

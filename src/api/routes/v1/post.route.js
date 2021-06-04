@@ -2,6 +2,7 @@ const express = require('express');
 const controller = require('@controllers/post.controller');
 const { authorize } = require('@middlewares/auth');
 const userService = require("@services/user.service")
+const accountService = require("@services/account.service")
 const multer = require("multer")
 
 const storage = multer.diskStorage({
@@ -36,13 +37,16 @@ router.param('postId', controller.load);
 router
    .route('/')
    .get(authorize(),controller.list)
-   .post(authorize(),userService.setUser,upload.array('file'),controller.setMedia,controller.create)
+   .post(authorize(),upload.array('file'),userService.setUser,accountService.findOrCreate,controller.setMedia,controller.create)
+
+router
+   .route('/my')
+   .get(authorize(),controller.getMyPost)
 
 router
    .route('/:postId')
    .get(authorize(), controller.get)
-   .put(authorize(), controller.replace)
-   .patch(authorize(),upload.array('file'),controller.setMedia,controller.update)
+   .patch(authorize(),upload.array('file'),controller.setMedia,accountService.findOrCreate,controller.update)
    .delete(authorize(), controller.remove);
 
 

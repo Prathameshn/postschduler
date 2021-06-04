@@ -24,8 +24,18 @@ var postSchema = new Schema({
     },
     targetDate: { type: Date, default:Date.now},
     scheduleDate: { type: Date, default:Date.now},
-    accountName: {
-      type:String
+    account:{
+      id:{
+        type:ObjectId,
+        ref:'Account',
+        required:true
+      },
+      name:{
+        type:String
+      },
+      type:{
+        type:String
+      }
     },
     user:{
         type:ObjectId,
@@ -45,7 +55,7 @@ postSchema.method({
         "media",
         "scheduleDate",
         "targetDate",
-        "accountName",
+        "account",
         "user",
         "createdAt",
         "updatedAt",
@@ -72,8 +82,8 @@ postSchema.statics = {
       if (mongoose.Types.ObjectId.isValid(id)) {
         post = await this.findById(id).exec();
       }
-      if (post && !post.isDeleted) {
-        return post.transform()
+      if (post) {
+        return post
       }
 
       throw new APIError({

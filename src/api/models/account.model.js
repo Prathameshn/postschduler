@@ -6,10 +6,9 @@ const APIError = require('@utils/APIError');
 
 var accountTypeSchema = new Schema({
     user:{ type: Schema.Types.ObjectId, required: true,ref:'User' },
-    name:{type:String,required:true},
+    name:{type:String},
     type:{
-        type:String,
-        enum:["FACEBOOK","LINNKEDIN","INSTAGRAM"]
+        type:String
     }
 },
    { timestamps: true }
@@ -20,7 +19,7 @@ accountTypeSchema.index({ user: 1,type:1 }, { unique: true });
 accountTypeSchema.method({
    transform() {
       const transformed = {};
-      const fields = ['id','user','type','updatedAt','createdAt'];
+      const fields = ['id','user','type','name','updatedAt','createdAt'];
 
       fields.forEach((field) => {
          transformed[field] = this[field];
