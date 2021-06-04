@@ -12,10 +12,14 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 const helmet = require('helmet');
 const passport = require('passport');
+<<<<<<< HEAD
 const routes = require('@routes/v1');
 const { logs } = require('./vars');
 const strategies = require('./passport');
 const error = require('@middlewares/error');
+=======
+const { logs } = require('./vars');
+>>>>>>> 156fa15b94e32bdbe9b9966fb32a1392e9b51779
 
 /**
 * Express instance
