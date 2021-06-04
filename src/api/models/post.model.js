@@ -103,19 +103,20 @@ postSchema.statics = {
    * @returns {Promise<Subject[]>}
    */
   async list({ page = 1, perPage = 20, user,title,description,accountName,sort, search }) {
-    const options = omitBy({ user,title,description,accountName }, isNil);
+    let options = omitBy({ user,title,description,accountName }, isNil);
      let sortQuery = {createdAt:-1} 
       if(sort=="targetDate"){
-         sortQuery = {targetDate:-1} 
+         sortQuery = {targetDate:1} 
       }else if(sort=="scheduleDate"){
-         sortQuery = {scheduleDate:-1} 
+         sortQuery = {scheduleDate:1} 
       }
       if(search && search.length){
          let queryArr = []
          queryArr.push({ "title": { $regex: search, $options: 'i' } })
          queryArr.push({ "description": { $regex: search, $options: 'i' } })
-         queryArr.push({ "accountName": { $regex: search, $options: 'i' } })
+         queryArr.push({ "account.name": { $regex: search, $options: 'i' } })
          options = { $and: [options, { $or: queryArr }] }
+         sortQuery = {targetDate:1} 
        }
       let posts = await this.find(options)
          .sort(sortQuery)
