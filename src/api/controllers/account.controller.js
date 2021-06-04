@@ -92,6 +92,17 @@ exports.list = async (req, res, next) => {
        next(new APIError(error));
     }
  };
+
+ exports.getMyAccount = async (req, res, next) => {
+    try {
+        let { entity } = req.session
+        req.query.user = entity
+        let accounts = await Account.list(req.query);
+        return res.json(accounts)
+    } catch (error) { 
+       next(new APIError(error));
+    }
+ };
  
  exports.getMoviesInAccount = async (req, res, next) => {
     try {

@@ -63,8 +63,8 @@ accountTypeSchema.statics = {
       * @param {number} limit - Limit number of accountType types to be returned.
       * @returns {Promise<Subject[]>}
       */
-   async list({ page = 1, perPage = 20,name }) {
-      let options = omitBy({ name }, isNil);
+   async list({ page = 1, perPage = 20,user }) {
+      let options = omitBy({ user }, isNil);
       let accountTypes = await this.find(options)
          .sort({ createdAt:-1 })
          .skip(perPage * (page * 1 - 1))
